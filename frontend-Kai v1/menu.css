@@ -1,0 +1,146 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #ffe6e0; /* warm light orange */
+    padding: 20px;
+}
+
+/* Header */
+.menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.menu-header h1 {
+    font-size: 32px;
+    font-weight: 900;
+    color: #cc3300; /* deep warm red */
+}
+
+.cart-btn {
+    background: #ff6600; /* bright orange */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.cart-btn:hover {
+    background: #ff8533; /* lighter warm orange */
+}
+
+/* Menu Grid */
+.menu-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(160px,1fr));
+    gap: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 10px;
+    background: #fff0e6; /* warm light tone */
+    border-radius: 8px;
+    border: 2px solid #ff8533; /* orange border */
+}
+
+.menu-container::-webkit-scrollbar {
+    width: 0;
+}
+
+/* Cards */
+.menu-card {
+    background: #fff3e6; /* light orange */
+    border-radius: 10px;
+    border: 2px solid #ff6600; /* warm orange */
+    padding: 10px;
+    text-align: center;
+    transition: 0.2s;
+}
+
+.menu-card:hover {
+    transform: scale(1.05);
+    border-color: #cc3300; /* deep red */
+}
+
+.item-img {
+    width: 100%;
+    height: 120px;
+    background: #ffcc99; /* soft warm tone */
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.item-name {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #990000; /* deep red for text */
+}
+
+.item-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item-actions button {
+    background: #ff6600; /* warm orange */
+    color: white;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.item-actions button:hover {
+    background: #cc3300; /* deep red */
+}
+
+.checkout-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #ff6600; /* warm orange */
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 25px;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 1000;
+    transition: 0.3s;
+}
+
+.checkout-btn:hover {
+    background-color: #cc3300; /* deep red */
+}
+
+.scroll-area {
+    max-height: 520px; 
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.scroll-area::-webkit-scrollbar {
+    width: 10px;
+}
+
+.scroll-area::-webkit-scrollbar-thumb {
+    background: #ff8533; /* warm orange scrollbar */
+    border-radius: 10px;
+}
+
+.scroll-area::-webkit-scrollbar-thumb:hover {
+    background: #cc3300; /* deep red */
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Choose One</title>
+    <link rel="stylesheet" href="choose.css" />
+</head>
+<body>
+
+    <div class="top-shape"></div>
+
+    <div class="container">
+        <h1>Choose One</h1>
+
+        <!-- Both buttons now go to menu.html -->
+        <button class="option-btn" onclick="window.location.href='menu.html'">
+            Dine In <span class="icon">🍽️</span>
+        </button>
+
+        <button class="option-btn" onclick="window.location.href='menu.html'">
+            Take Out <span class="icon">🛍️</span>
+        </button>
+
+        <button class="back-btn" onclick="history.back()">
+            ⬅ Back
+        </button>
+    </div>
+
+</body>
+</html>

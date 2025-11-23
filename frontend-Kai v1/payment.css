@@ -1,0 +1,273 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: #fff0e6;
+    padding: 20px;
+}
+
+.return-header button {
+    background: #b30000;
+    color: white;
+    padding: 10px 18px;
+    font-size: 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+h1 {
+    text-align: center;
+    margin: 20px 0;
+    color: #ff3300;
+    font-size: 35px;
+    font-weight: 900;
+}
+
+.table-container {
+    background: #fff5e6;
+    padding: 20px;
+    border-radius: 12px;
+    border: 2px solid #ff9966;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 20px;
+}
+
+table th {
+    padding: 15px;
+    background: #ff3300;
+    color: white;
+    font-size: 22px;
+}
+
+table td {
+    padding: 12px;
+    border-bottom: 1px solid #ff9966;
+    text-align: center;
+}
+
+.qty-btn {
+    padding: 5px 10px;
+    background: #ff4500;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.bottom-bar {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.back-btn {
+    background: #ff1a1a;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.total-box {
+    font-size: 28px;
+    font-weight: bold;
+    color: #ff3300;
+}
+
+.modes-btn {
+    background: #ff6600;
+    color: white;
+    padding: 12px 22px;
+    border: none;
+    border-radius: 10px;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    background: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 99;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    width: 420px;
+}
+
+.modal-content h2 {
+    font-size: 30px;
+    margin-bottom: 20px;
+    color: #ff3300;
+}
+
+.payment-options {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.pay-option {
+    padding: 15px 25px;
+    font-size: 24px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.pay-option.cash {
+    background: #ff6600;
+    color: white;
+}
+
+.pay-option.card {
+    background: #ff3300;
+    color: white;
+}
+
+.close-btn {
+    margin-top: 20px;
+    padding: 10px 25px;
+    font-size: 18px;
+    background: #cc3300;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.cash-box .cash-total {
+    font-size: 35px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.cash-input {
+    width: 80%;
+    padding: 12px;
+    font-size: 20px;
+    border-radius: 10px;
+    border: 2px solid #ff9966;
+    margin-bottom: 15px;
+}
+
+.cash-change {
+    font-size: 32px;
+    font-weight: bold;
+    color: #ff3300;
+}
+
+.cash-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.confirm-btn {
+    padding: 12px 28px;
+    font-size: 20px;
+    border: none;
+    background: #ff6600;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.card-box input {
+    width: 80%;
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    border: 2px solid #ff9966;
+    font-size: 18px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.card-box input:focus {
+    border-color: #ff3300;
+}
+
+.receipt-box {
+    width: 420px;
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.receipt-box h2 {
+    font-size: 34px;
+    margin-bottom: 20px;
+    color: #ff3300;
+}
+
+.receipt-label {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.receipt-value {
+    font-size: 26px;
+    margin-bottom: 10px;
+    color: #444;
+}
+
+.receipt-items table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+}
+
+.receipt-items th, .receipt-items td {
+    border: 1px solid #ff9966;
+    padding: 8px;
+    font-size: 14px;
+}
+
+.receipt-items th {
+    background-color: #ffcc99;
+}
+
+#receiptChangeBox {
+    margin-top: 10px;
+}
+
+.confirm-btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #ff4500;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.confirm-btn:hover {
+    background-color: #ff3300;
+}

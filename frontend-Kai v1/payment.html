@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment</title>
+<link rel="stylesheet" href="payment.css">
+</head>
+
+<body>
+
+<!-- Return Header -->
+<div class="return-header">
+    <button onclick="window.history.back()">← Return</button>
+</div>
+
+<h1>Payment</h1>
+
+<!-- Table Container -->
+<div class="table-container">
+    <table id="paymentTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<!-- Bottom Section -->
+<div class="bottom-bar">
+    <button class="back-btn" onclick="window.history.back()">Back</button>
+
+    <div class="total-box" id="totalPrice">Total: ₱0.00</div>
+
+    <button class="modes-btn" onclick="openPaymentModal()">Pick a Payment</button>
+</div>
+
+<!-- PAYMENT MODAL -->
+<div id="paymentModal" class="modal">
+    <div class="modal-content">
+        <h2>Select Payment Method</h2>
+
+        <div class="payment-options">
+            <button class="pay-option cash" onclick="openCashModal()">💵 Cash</button>
+            <button class="pay-option card" onclick="openCardModal()">💳 Card</button>
+        </div>
+
+        <button class="close-btn" onclick="closePaymentModal()">Cancel</button>
+    </div>
+</div>
+
+<!-- CASH PAYMENT MODAL -->
+<div id="cashModal" class="modal">
+    <div class="modal-content cash-box">
+        <h2>Cash Payment</h2>
+
+        <p class="total-label">Total Amount:</p>
+        <p class="cash-total" id="cashTotal">₱0.00</p>
+
+        <label class="input-label">Amount Given:</label>
+        <input type="number" id="amountGiven" class="cash-input" oninput="computeChange()">
+
+        <p class="change-label">Change:</p>
+        <p class="cash-change" id="changeDisplay">₱0.00</p>
+
+        <div class="cash-buttons">
+            <button class="confirm-btn" onclick="finishCashPayment()">Confirm</button>
+            <button class="close-btn" onclick="closeCashModal()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- CARD PAYMENT MODAL -->
+<div id="cardModal" class="modal">
+    <div class="modal-content card-box">
+        <h2 style="text-align:center;">Card Payment</h2>
+
+        <label class="input-label" style="display:block; text-align:center;">Cardholder Name:</label>
+        <input type="text" id="cardName" class="card-input">
+
+        <label class="input-label" style="display:block; text-align:center;">Card Number:</label>
+        <input type="text" id="cardNumber" maxlength="16" class="card-input">
+
+        <label class="input-label" style="display:block; text-align:center;">Expiration Date (MM/YY):</label>
+        <input type="text" id="cardExpiry" maxlength="5" class="card-input">
+
+        <div class="cash-buttons">
+            <button class="confirm-btn" onclick="finishCardPayment()">Confirm</button>
+            <button class="close-btn" onclick="closeCardModal()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- RECEIPT MODAL -->
+<div id="receiptModal" class="modal">
+    <div class="modal-content receipt-box">
+        <h2 style="text-align:center;">Receipt</h2>
+
+        <div class="receipt-items">
+            <table id="receiptTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Qty</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <p class="receipt-label">Payment Type: <span id="receiptPaymentType">---</span></p>
+        <p class="receipt-label">Total Amount: <span id="receiptTotal">₱0.00</span></p>
+
+        <div id="receiptChangeBox">
+            <p class="receipt-label">Cash Given: <span id="receiptCashGiven">₱0.00</span></p>
+            <p class="receipt-label">Change: <span id="receiptChange">₱0.00</span></p>
+        </div>
+
+        <button class="confirm-btn" onclick="finishReceipt()">Done</button>
+    </div>
+</div>
+
+<script>
+let cart = JSON.parse(sessionStorage.getItem('cart')) || [];
+let totalAmount = 0;
+
+// Render items in payment table
+function renderPayment() {
+    const tbody = document.querySelector('#paymentTable tbody');
+    tbody.innerHTML = '';
+    totalAmount = 0;
+
+    cart.forEach((item, index) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${item.name}</td>
+            <td>₱${item.price.toFixed(2)}</td>
+            <td>
+                <button class="qty-btn" onclick="changeQty(${index}, -1)">−</button>
+                ${item.quantity}
+                <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+            </td>
+        `;
+        tbody.appendChild(tr);
+        totalAmount += item.price * item.quantity;
+    });
+
+    document.getElementById("totalPrice").innerText = "Total: ₱ " + totalAmount.toFixed(2);
+}
+
+// Quantity adjuster
+function changeQty(index, delta) {
+    cart[index].quantity += delta;
+    if (cart[index].quantity <= 0) cart.splice(index, 1);
+    sessionStorage.setItem('cart', JSON.stringify(cart));
+    renderPayment();
+}
+
+// Payment modal controls
+function openPaymentModal() { document.getElementById('paymentModal').style.display = 'flex'; }
+function closePaymentModal() { document.getElementById('paymentModal').style.display = 'none'; }
+
+// Cash modal
+function openCashModal() {
+    closePaymentModal();
+    document.getElementById("cashModal").style.display = "flex";
+    document.getElementById("cashTotal").innerText = "₱ " + totalAmount.toFixed(2);
+}
+function closeCashModal() { document.getElementById("cashModal").style.display = "none"; }
+
+function computeChange() {
+    let given = parseFloat(document.getElementById("amountGiven").value) || 0;
+    let change = given - totalAmount;
+    document.getElementById("changeDisplay").innerText = "₱ " + (change >= 0 ? change.toFixed(2) : "0.00");
+}
+
+function finishCashPayment() {
+    let given = parseFloat(document.getElementById("amountGiven").value) || 0;
+    if (given < totalAmount) { alert("Insufficient cash amount."); return; }
+    let change = given - totalAmount;
+    showReceipt("Cash", totalAmount, given, change);
+    closeCashModal();
+}
+
+// Card modal
+function openCardModal() {
+    closePaymentModal();
+    document.getElementById("cardModal").style.display = "flex";
+}
+function closeCardModal() { document.getElementById("cardModal").style.display = "none"; }
+
+function finishCardPayment() {
+    let name = document.getElementById("cardName").value.trim();
+    let number = document.getElementById("cardNumber").value.trim();
+    let expiry = document.getElementById("cardExpiry").value.trim();
+
+    if (name === "" || number.length < 16 || expiry.length < 5) {
+        alert("Please complete all card details correctly.");
+        return;
+    }
+
+    showReceipt("Card", totalAmount);
+    closeCardModal();
+}
+
+// Show receipt
+function showReceipt(type, total, given = null, change = null) {
+    const tbody = document.querySelector("#receiptTable tbody");
+    tbody.innerHTML = "";
+    cart.forEach(item => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${item.name}</td>
+            <td>₱${item.price.toFixed(2)}</td>
+            <td>${item.quantity}</td>
+            <td>₱${(item.price * item.quantity).toFixed(2)}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+
+    document.getElementById("receiptPaymentType").innerText = type;
+    document.getElementById("receiptTotal").innerText = "₱ " + total.toFixed(2);
+
+    if (type === "Cash") {
+        document.getElementById("receiptChangeBox").style.display = "block";
+        document.getElementById("receiptCashGiven").innerText = "₱ " + given.toFixed(2);
+        document.getElementById("receiptChange").innerText = "₱ " + change.toFixed(2);
+    } else {
+        document.getElementById("receiptChangeBox").style.display = "none";
+    }
+
+    document.getElementById("receiptModal").style.display = "flex";
+}
+
+function finishReceipt() {
+    sessionStorage.removeItem("cart");
+    window.location.href = "index.html";
+}
+
+renderPayment();
+</script>
+
+</body>
+</html>

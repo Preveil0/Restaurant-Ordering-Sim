@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Review Your Order</title>
+<link rel="stylesheet" href="viewcart.css">
+</head>
+<body>
+
+<div class="header-bar">
+    <button onclick="window.history.back()">← Return</button>
+</div>
+
+<h1>Review Your Order</h1>
+
+<div class="cart-container">
+    <table id="cartTable">
+        <tbody>
+            <!-- Table rows will be dynamically generated -->
+        </tbody>
+    </table>
+</div>
+
+<div class="bottom-section">
+    <div class="bottom-buttons">
+        <button class="back-btn" onclick="window.history.back()">Back</button>
+        <button onclick="window.location.href='payment.html'">Proceed to Payment</button>
+    </div>
+
+    <div class="total-box" id="totalPrice">Order Total: ₱0.00</div>
+
+    <!-- Preview Button -->
+    <div class="bottom-buttons">
+        <button class="preview-btn" onclick="document.getElementById('previewModal').style.display='flex'">Preview Order</button>
+    </div>
+</div>
+
+<!-- Preview Modal -->
+<div id="previewModal" class="modal">
+    <div class="modal-content">
+        <h2>Your Order Preview</h2>
+        <table id="previewTable">
+            <tbody>
+                <!-- Table rows will be dynamically generated -->
+            </tbody>
+        </table>
+        <p><strong>Total: </strong><span id="previewTotal">₱0.00</span></p>
+        <button class="close-btn" onclick="document.getElementById('previewModal').style.display='none'">Close</button>
+    </div>
+</div>
+
+<script>
+    // Placeholder for dynamically loading items from your database
+    function loadCartItems(cartItems) {
+        const cartTable = document.getElementById('cartTable').querySelector('tbody');
+        const previewTable = document.getElementById('previewTable').querySelector('tbody');
+        let total = 0;
+
+        cartItems.forEach(item => {
+            const subtotal = item.price * item.quantity;
+            total += subtotal;
+
+            // Main table row
+            const row = document.createElement('tr');
+            row.innerHTML = `<td>${item.name}</td><td>₱${item.price.toFixed(2)}</td><td>${item.quantity}</td><td>₱${subtotal.toFixed(2)}</td>`;
+            cartTable.appendChild(row);
+
+            // Preview modal row
+            const previewRow = document.createElement('tr');
+            previewRow.innerHTML = `<td>${item.name}</td><td>₱${item.price.toFixed(2)}</td><td>${item.quantity}</td><td>₱${subtotal.toFixed(2)}</td>`;
+            previewTable.appendChild(previewRow);
+        });
+
+        document.getElementById('totalPrice').innerText = `Order Total: ₱${total.toFixed(2)}`;
+        document.getElementById('previewTotal').innerText = `₱${total.toFixed(2)}`;
+    }
+
+    // Example usage: loadCartItems([]); when fetching from database
+</script>
+
+</body>
+</html>

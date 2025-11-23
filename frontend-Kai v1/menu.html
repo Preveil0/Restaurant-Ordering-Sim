@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menu</title>
+<link rel="stylesheet" href="menu.css">
+</head>
+<body>
+
+<!-- Header with cart icon -->
+<div class="menu-header">
+    <h1>EXPLORE OUR SPLENDID MENU</h1>
+    <button class="cart-btn" onclick="viewCart()">
+        🛒 Cart (<span id="cartCount">0</span>)
+    </button>
+</div>
+
+<!-- Scrollable Menu Section -->
+<div class="menu-container scroll-area" id="menu">
+
+    <!-- Example card -->
+    <div class="menu-card">
+        <div class="item-img"></div>
+        <p class="item-name">Item Name</p>
+        <div class="item-actions">
+            <span>₱ 0.00</span>
+            <button onclick="addToCart('Item Name', 0)">Add to Cart</button>
+        </div>
+    </div>
+
+
+    <div class="menu-card">
+        <div class="item-img"></div>
+        <p class="item-name">Item Name</p>
+        <div class="item-actions">
+            <span>₱ 0.00</span>
+            <button onclick="addToCart('Item Name', 0)">Add to Cart</button>
+        </div>
+    </div>
+
+</div>
+
+<!-- Checkout button bottom-right -->
+<button class="checkout-btn" onclick="viewCart()">Checkout / Payment 🛒</button>
+
+<script>
+    let cart = [];
+
+    function addToCart(name, price){
+        const item = {name, price, quantity: 1};
+        const existing = cart.find(i => i.name === name);
+        if(existing){
+            existing.quantity +=1;
+        }else{
+            cart.push(item);
+        }
+        updateCartCount();
+        alert(name + " added to cart!");
+    }
+
+    function updateCartCount(){
+        const total = cart.reduce((sum,item)=>sum+item.quantity,0);
+        document.getElementById('cartCount').innerText = total;
+    }
+
+    function viewCart(){
+        sessionStorage.setItem('cart', JSON.stringify(cart));
+        window.location.href='viewcart.html';
+    }
+</script>
+
+</body>
+</html>
